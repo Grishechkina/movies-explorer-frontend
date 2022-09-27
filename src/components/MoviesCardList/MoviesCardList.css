@@ -1,0 +1,32 @@
+.movies-card {
+  margin: 70px 70px 80px 70px;
+}
+.movies-card__list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 22px;
+  row-gap: 34px;
+  justify-content: center;
+  margin: auto;
+  max-width: 1280px;
+}
+
+.movies-card__item {
+  display: flex;
+  flex-direction: column;
+  width: 364px;
+}
+
+.movies-card__more-btn {
+  display: block;
+  border: none;
+  border: 1px solid #E8E8E8;
+  width: 100%;
+  max-width: 320px;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 58px auto 160px;
+  height: 36px;
+}

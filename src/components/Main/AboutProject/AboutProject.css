@@ -1,0 +1,91 @@
+.about-project{
+  padding: 113px 70px;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.about-project__header {
+  font-weight: 400;
+  margin: 0;
+  padding-bottom: 23px;
+  font-size: 22px;
+  line-height: 27px;
+  text-align: left;
+  margin-bottom: 70px;
+  border-bottom: 1px solid #000000;
+  display: block;
+  letter-spacing: -0.04em;
+}
+
+.about-project_list {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 110px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.about-project__item {
+  max-width: 550px;
+}
+
+.about-project__subheader {
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: 26px;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: left;
+  letter-spacing: -0.04em;
+}
+
+.about-project__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.about-project__scale{
+  display: flex;
+  margin: 0 0px;
+  width: 100%;
+}
+
+.about-project__scale-back{
+  display: flex;
+  flex-direction: column;
+  width: calc(100% / 5);
+}
+
+.about-project__scale-front{
+  display: flex;
+  flex-direction: column;
+  width: calc((100% / 5)*4);
+}
+
+.about-project__ceil{
+  background-color: black;
+  color: white;
+  height: 36px;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about-project__ceil_gray{
+  color: #000000;
+  background-color: #F2F2F2;
+}
+
+.about-project__caption{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+}

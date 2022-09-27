@@ -1,0 +1,20 @@
+.promo {
+  height: 524px;
+  background-color: #F3C1F8;
+  background-image: url(../../../images/banner-background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 18px;
+  border: none;
+}
+
+.promo__header {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  text-align: center;
+  margin: auto;
+  padding-top: 184px;
+  width: 730px;
+}

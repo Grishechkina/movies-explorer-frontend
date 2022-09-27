@@ -1,0 +1,27 @@
+.filter-checkbox {
+  margin-top: 41px;
+  margin-bottom: 70px;
+}
+
+.filter-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.filter-checkbox__custom {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  width: 36px;
+  background-image: url('../../images/checkbox-unactive.svg');
+  background-size: cover;
+}
+
+.filter-checkbox__text {
+  font-size: 14px;
+  line-height: 18px;
+  margin-left: 12px;
+}
