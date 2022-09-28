@@ -65,3 +65,27 @@
   border: none;
   border-radius: 4px;
 }
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .header {
+    padding: 18px 30px 0 30px;
+  }
+}
+
+@media (max-width: 499px) {
+  .header {
+    padding: 18px 14px 0 14px;
+  }
+
+  .header__link {
+    font-size: 10px;
+  }
+
+  .header__link_signin {
+    padding: 5px 12px;
+  }
+
+  .header__sign-btns {
+    gap: 15px;
+  }
+}

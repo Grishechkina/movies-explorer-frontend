@@ -1,4 +1,4 @@
-.about-project{
+.about-project {
   padding: 113px 70px;
   max-width: 1280px;
   margin: auto;
@@ -47,25 +47,25 @@
   line-height: 20px;
 }
 
-.about-project__scale{
+.about-project__scale {
   display: flex;
   margin: 0 0px;
   width: 100%;
 }
 
-.about-project__scale-back{
+.about-project__scale-back {
   display: flex;
   flex-direction: column;
   width: calc(100% / 5);
 }
 
-.about-project__scale-front{
+.about-project__scale-front {
   display: flex;
   flex-direction: column;
   width: calc((100% / 5)*4);
 }
 
-.about-project__ceil{
+.about-project__ceil {
   background-color: black;
   color: white;
   height: 36px;
@@ -76,16 +76,78 @@
   justify-content: center;
   align-items: center;
 }
-.about-project__ceil_gray{
+
+.about-project__ceil_gray {
   color: #000000;
   background-color: #F2F2F2;
 }
 
-.about-project__caption{
+.about-project__caption {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
   text-align: center;
   color: #A0A0A0;
+}
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+    text-align: left;
+  }
+
+  .about-project_list {
+    margin-bottom: 93px;
+  }
+}
+
+@media (max-width: 499px) {
+  .about-project {
+    padding: 73px 18px;
+  }
+
+  .about-project__header {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 27px;
+    margin-bottom: 61px;
+  }
+
+  .about-project__subheader {
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 15px;
+  }
+
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+    text-align: left;
+  }
+
+  .about-project_list {
+    margin-bottom: 59px;
+    flex-direction: column;
+    gap: 57px;
+  }
+
+  .about-project__caption,
+  .about-project__ceil {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__scale-back {
+    width: calc(100% / 3);
+  }
+  
+  .about-project__scale-front {
+    width: calc((100% / 3)*2);
+  }
 }

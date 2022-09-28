@@ -13,7 +13,7 @@ function App() {
   const path = useLocation().pathname;
 
   let isLoggedIn = path !== '/sign-up' && path !== '/sign-in'
-  const needShowFooter = !isLoggedIn && path !== '/profile' && path !== '/*' && path !== '/sign-up' && path !== '/sign-in'
+  const needShowFooter = isLoggedIn && path !== '/profile'
   return (
     <div className="page">
       {isLoggedIn && <Header />}

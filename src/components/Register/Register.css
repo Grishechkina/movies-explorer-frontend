@@ -119,3 +119,37 @@
 .register__error_show {
   visibility: visible;
 }
+
+@media (max-width: 499px) {
+  .register {
+    justify-content: flex-start;
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+  }
+
+  .register__container {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .register__logo {
+    margin: auto;
+  }
+
+  .register__header {
+    text-align: center;
+    margin: 50px 0 81px 0;
+  }
+
+  .register__button {
+    margin-top: 112px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .register__caption-link,
+  .register__caption-text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

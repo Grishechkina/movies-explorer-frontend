@@ -15,3 +15,20 @@
   font-weight: 500;
   line-height: 16px;
 }
+
+@media (max-width: 499px) {
+  .nav-tab {
+    background-color: black;
+    margin: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .nav-tab__link {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

@@ -1,8 +1,8 @@
 function Techs() {
   return (
     <div className="techs" id="techs">
-      <h2 className="techs__header">Технологии</h2>
-            <h2 className="techs__title">7 технологий</h2>
+      <h2 className="techs__title">Технологии</h2>
+            <h2 className="techs__subtitle">7 технологий</h2>
             <p className="techs__paragraph">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
             <ul className="techs__list">
                 <li className="techs__item">HTML</li>

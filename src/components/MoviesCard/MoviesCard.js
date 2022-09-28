@@ -1,5 +1,5 @@
 function MoviesCard({ movie, isOpenSavedMovies }) {
-	console.log(!!movie.isSaved)
+
 	return (
 		<div className="card">
 			<a className="card__link" href={movie.trailerLink} target="_blank" rel="noreferrer">

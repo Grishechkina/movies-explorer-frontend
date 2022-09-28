@@ -18,3 +18,26 @@
   padding-top: 184px;
   width: 730px;
 }
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .promo {
+    height: 784px;
+  }
+
+  .promo__header {
+    padding-top: 326px;
+  }
+}
+
+@media (max-width: 499px) {
+  .promo {
+    height: 570px;
+  }
+
+  .promo__header {
+    padding-top: 207px;
+    font-size: 31px;
+    line-height: 39px;
+    width: 300px;
+  }
+}

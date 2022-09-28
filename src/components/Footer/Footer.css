@@ -51,3 +51,43 @@
 .footer__link:last-child {
   margin-right: 0;
 }
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .footer {
+    padding: 0 30px 20px;
+  }
+}
+
+@media (max-width: 499px) {
+  .footer {
+    padding: 0 14px 10px;
+  }
+
+  .footer__info {
+    margin-bottom: 30px;
+  }
+
+  .footer__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
+    margin-right: 0;
+  }
+
+  .footer__line {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+}

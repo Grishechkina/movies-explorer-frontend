@@ -33,11 +33,41 @@
   margin: 0;
 }
 
-.portfolio__ico {
+.portfolio__icon {
   background-image: url('../../../images/arrow.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   width: 29px;
   height: 60px;
+}
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .portfolio {
+    padding: 0 50px 68px 50px;
+  }
+  .portfolio__icon {
+    width: 19px;
+  }
+}
+
+@media (max-width: 499px) {
+  .portfolio {
+    padding: 0 14px 47px 14px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 21px;
+  }
+
+  .portfolio__text {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__icon {
+    width: 13px;
+  }
 }

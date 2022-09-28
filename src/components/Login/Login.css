@@ -116,3 +116,37 @@
 .login__error_show {
   visibility: visible;
 }
+
+@media (max-width: 499px) {
+  .login {
+    justify-content: flex-start;
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+  }
+
+  .login__container {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login__logo {
+    margin: auto;
+  }
+
+  .login__title {
+    text-align: center;
+    margin: 50px 0 81px 0;
+  }
+
+  .login__button {
+    margin-top: 112px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .login__caption-link,
+  .login__caption-text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

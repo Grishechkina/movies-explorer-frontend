@@ -177,3 +177,31 @@
 .profile__error_show {
   visibility: visible;
 }
+
+@media (min-width: 500px) and (max-width: 850px) {
+  .profile {
+    height: 89vh;
+  }
+
+  .profile__form {
+    margin: 211px auto 67px;
+  }
+
+  .profile__title {
+    margin-top: 43px;
+    margin-bottom: 97px;
+  }
+}
+@media (max-width: 499px) {
+  .profile {
+    height: 87vh;
+  }
+  .profile__form {
+    width: 260px;
+    margin-top: 66px;
+  }
+
+  .profile__title {
+    margin-bottom: 81px;
+  }
+}

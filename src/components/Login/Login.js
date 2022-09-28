@@ -18,7 +18,7 @@ function Login() {
     wrongData: "Вы ввели неправильный логин или пароль.",
     invalidToken: "При авторизации произошла ошибка. Токен не передан или передан не в том формате.",
     incorrectToken: "При авторизации произошла ошибка. Переданный токен некорректен."
-}
+  }
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -62,7 +62,7 @@ function Login() {
   return (
     <div className="login">
       <div className="login__container">
-      <img src={logo} alt="Фильмосерч лого" className="login__logo"/>
+        <img src={logo} alt="Фильмосерч лого" className="login__logo" />
         <form className="login__form" name='login'>
           <h2 className="login__title">Рады видеть!</h2>
           <label className="login__form-field">Email
