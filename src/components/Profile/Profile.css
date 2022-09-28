@@ -107,10 +107,6 @@
   padding: 0;
 }
 
-.profile__edit:hover {
-  opacity: 0.7;
-}
-
 .profile__edit_hide {
   display: none;
 }
@@ -124,10 +120,6 @@
   color: #FF4062;
   margin: 16px 0 0;
   text-decoration: none;
-}
-
-.profile__sign-out:hover {
-  opacity: 0.7;
 }
 
 .profile__sign-out_hide {
@@ -147,10 +139,6 @@
   text-align: center;
   color: #FFFFFF;
   border: none;
-}
-
-.profile__button-save:hover {
-  opacity: 0.8;
 }
 
 .profile__button-save_active {

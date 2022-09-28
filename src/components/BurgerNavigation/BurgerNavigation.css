@@ -12,10 +12,6 @@
   background-color: transparent;
 }
 
-.burger__button:hover {
-  opacity: 0.8;
-}
-
 @media screen and (max-width: 767px) {
   .burger__button {
     width: 40px;

@@ -25,7 +25,7 @@ function Header() {
       {needNav && window.innerWidth > 850 &&
         <Link to="/profile" className="header__account link">
           Аккаунт
-          <button className="header__account-icon" />
+          <button className="header__account-icon btn" />
         </Link>
       }
     </header>

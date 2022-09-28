@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg'
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const [emailError, setEmailError] = useState('Поле Email не должно быть пустым.');
-  const [passError, setPassError] = useState('Поле Пароль не должно быть пустым.');
   const [emailTouched, setEmailTouched] = useState(false);
   const [passTouched, setPassTouched] = useState(false);
   const [formValid, setFormValid] = useState(false);
+  const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('Поле Email не должно быть пустым.');
+  const [passError, setPassError] = useState('Поле Пароль не должно быть пустым.');
+
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const loginErrors = {
-    wrongData: "Вы ввели неправильный логин или пароль.",
-    invalidToken: "При авторизации произошла ошибка. Токен не передан или передан не в том формате.",
-    incorrectToken: "При авторизации произошла ошибка. Переданный токен некорректен."
-  }
+  useEffect(() => {
+    if (emailError || passError) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [emailError, passError]);
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -28,6 +30,7 @@ function Login() {
       setEmailError('');
     }
   }
+
   function handlePasswordChange(e) {
     setPassword(e.target.value);
     if (e.target.value.length < 2) {
@@ -36,9 +39,11 @@ function Login() {
       setPassError('');
     }
   }
+
   function handleSubmit(e) {
     e.preventDefault();
   }
+
   function blurHandler(e) {
     switch (e.target.name) {
       case 'email':
@@ -51,13 +56,6 @@ function Login() {
         break;
     }
   }
-  useEffect(() => {
-    if (emailError || passError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
-    }
-  }, [emailError, passError]);
 
   return (
     <div className="login">
@@ -94,9 +92,9 @@ function Login() {
             />
             <span className={`login__error-validation ${(passTouched && passError) && 'login__error-validation_show'}`}>{passError}</span>
           </label>
-          <span className={`login__error ${error}`}>{loginErrors.wrongData}</span>
+          <span className={`login__error ${error}`}>Вы ввели неправильный логин или пароль.</span>
           <button
-            className={`login__button ${!formValid && 'login__button_disabled'}`}
+            className={`login__button ${!formValid && 'login__button_disabled'} btn`}
             onClick={handleSubmit}
             type="submit"
             disabled={!formValid}

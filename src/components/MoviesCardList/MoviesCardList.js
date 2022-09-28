@@ -44,7 +44,7 @@ function MoviesCardList({isOpenSavedMovies}) {
           ))
         }
       </div>
-      <button className="movies-card__more-btn">Еще</button>
+      <button className="btn movies-card__more-btn">Еще</button>
     </div>
   );
 }

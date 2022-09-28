@@ -76,10 +76,6 @@
   border: none;
 }
 
-.register__button:hover {
-  opacity: 0.8;
-}
-
 .register__button_disabled {
   background: #F8F8F8;
   color: #C2C2C2;

@@ -41,10 +41,6 @@
   padding: 0;
 }
 
-.menu__close-button:hover {
-  opacity: 0.8;
-}
-
 .menu__links {
   display: flex;
   flex-direction: column;
@@ -69,10 +65,6 @@
   margin-bottom: 28px;
   padding: 0;
   text-decoration: none;
-}
-
-.menu__link:hover {
-  opacity: 0.7;
 }
 
 .menu__link:last-of-type {
@@ -102,10 +94,6 @@
   background: #F9F9F9;
   border-radius: 20px;
   text-decoration: none;
-}
-
-.menu__link-profile:hover {
-  opacity: 0.7;
 }
 
 .menu__account {

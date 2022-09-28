@@ -1,4 +1,3 @@
-import React from "react";
 import './Menu.css'
 import { NavLink } from 'react-router-dom';
 
@@ -9,7 +8,7 @@ function Menu({ isOpen, onClose }) {
   return (
     <div className={`menu ${isOpen && 'menu_opened'}`}>
       <div className="menu__container">
-        <button className="menu__close-button" onClick={onClose} type="button" aria-label="Close"></button>
+        <button className="menu__close-button btn" onClick={onClose} type="button" aria-label="Close"></button>
         <div className='menu__links'>
           <nav className='menu__nav'>
             <NavLink to='/' end className={setLinkStyle} onClick={onClose}>Главная</NavLink>
@@ -18,7 +17,7 @@ function Menu({ isOpen, onClose }) {
           </nav>
           <NavLink to="/profile" className="menu__account link" onClick={onClose}>
           Аккаунт
-          <button className="menu__account-icon" />
+          <button className="menu__account-icon btn" />
         </NavLink>
         </div>
       </div>
