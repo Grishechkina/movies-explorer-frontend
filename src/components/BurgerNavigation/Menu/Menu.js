@@ -17,7 +17,7 @@ function Menu({ isOpen, onClose }) {
           </nav>
           <NavLink to="/profile" className="menu__account link" onClick={onClose}>
           Аккаунт
-          <button className="menu__account-icon btn" />
+          <button type="button" className="menu__account-icon btn" />
         </NavLink>
         </div>
       </div>

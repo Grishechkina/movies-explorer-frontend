@@ -16,7 +16,7 @@
   text-align: center;
   margin: auto;
   padding-top: 184px;
-  width: 730px;
+  max-width: 730px;
 }
 
 @media (min-width: 500px) and (max-width: 850px) {
@@ -38,6 +38,5 @@
     padding-top: 207px;
     font-size: 31px;
     line-height: 39px;
-    width: 300px;
   }
 }

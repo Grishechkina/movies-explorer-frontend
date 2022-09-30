@@ -5,11 +5,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies() {
   const loading = false;
   return (
-    <>
-    <SearchForm />
-    {loading && <Preloader />}
-    <MoviesCardList isOpenSavedMovies="true"/>
-    </>
+    <section>
+      <SearchForm />
+      {loading && <Preloader />}
+      <MoviesCardList isOpenSavedMovies="true" />
+    </section>
   )
 }
 

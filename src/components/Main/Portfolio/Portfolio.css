@@ -4,6 +4,12 @@
   margin: auto;
 }
 
+.portfolio__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .portfolio__title {
   font-weight: 400;
   font-size: 18px;
@@ -46,6 +52,7 @@
   .portfolio {
     padding: 0 50px 68px 50px;
   }
+
   .portfolio__icon {
     width: 19px;
   }

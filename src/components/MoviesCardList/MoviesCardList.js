@@ -35,16 +35,16 @@ function MoviesCardList({isOpenSavedMovies}) {
 
   return (
     <div className="movies-card">
-      <div className="movies-card__list">
+      <ul className="movies-card__list">
         {movies
           .map((item, idx) => (
-            <div className="movies-card__item" key={idx}>
+            <li className="movies-card__item" key={idx}>
               <MoviesCard movie={item} isOpenSavedMovies={isOpenSavedMovies}/>
-            </div>
+            </li>
           ))
         }
-      </div>
-      <button className="btn movies-card__more-btn">Еще</button>
+      </ul>
+      <button type="button" className="btn movies-card__more-btn">Еще</button>
     </div>
   );
 }

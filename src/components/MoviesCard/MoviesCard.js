@@ -8,7 +8,7 @@ function MoviesCard({ movie, isOpenSavedMovies }) {
 			<div className="card__info">
 				<div className="card__desc">
 					<h3 className="card__title">{movie.nameRU}</h3>
-					<button className={`btn card__button${movie.isSaved ? ' card__button_saved' : ''}${isOpenSavedMovies ? ' card__button_deleted' : ''}`}></button>
+					<button type="button" className={`btn card__button${movie.isSaved ? ' card__button_saved' : ''}${isOpenSavedMovies ? ' card__button_deleted' : ''}`}></button>
 				</div>
 				<p className="card__duration">{movie.duration}</p>
 			</div>

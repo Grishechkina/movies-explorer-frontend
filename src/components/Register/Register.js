@@ -74,7 +74,7 @@ function Register() {
   }
 
   return (
-    <div className="register">
+    <section className="register">
       <div className="register__container">
         <img src={logo} alt="Фильмосерч лого" className="register__logo" />
         <form className="register__form" name='register'>
@@ -136,7 +136,7 @@ function Register() {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

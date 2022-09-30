@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .search-form__find {
@@ -31,8 +32,8 @@
   background-image: url('../../images/find-btn.svg');
   border: none;
   position: absolute;
-  right: 76px;
-  top: 141px;
+  right: 2px;
+  top: 7px;
   background-color: transparent;
 }
 
@@ -40,21 +41,11 @@
   .search-form {
     margin: 97px 30px 0 30px;
   }
-
-  .search-form__button {
-    right: 36px;
-    top: 160px;
-  }
 }
 
 @media (max-width: 499px) {
   .search-form {
     margin: 92px 17px 0 17px;
-  }
-
-  .search-form__button {
-    right: 20px;
-    top: 160px;
   }
 
   .search-form__input {

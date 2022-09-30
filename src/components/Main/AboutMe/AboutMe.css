@@ -98,6 +98,9 @@
     line-height: 40px;
   }
 
+  .about-me__img {
+    margin-left: 15px;
+  }
 
   .about-me__desc,
   .about-me__about {

@@ -58,7 +58,7 @@ function Login() {
   }
 
   return (
-    <div className="login">
+    <section className="login">
       <div className="login__container">
         <img src={logo} alt="Фильмосерч лого" className="login__logo" />
         <form className="login__form" name='login'>
@@ -105,7 +105,7 @@ function Login() {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

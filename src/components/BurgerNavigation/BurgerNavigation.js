@@ -8,7 +8,7 @@ function BurgerNavigation() {
   }
   return (
     <div className="burger">
-      <button className="burger__button btn" onClick={toggleMenuState}></button>
+      <button type="button" className="burger__button btn" onClick={toggleMenuState}></button>
       <Menu isOpen={isNavOpen} onClose={toggleMenuState} />
     </div>
   );

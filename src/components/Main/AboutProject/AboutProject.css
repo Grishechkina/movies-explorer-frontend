@@ -17,7 +17,7 @@
   letter-spacing: -0.04em;
 }
 
-.about-project_list {
+.about-project__list {
   margin: 0;
   padding: 0;
   margin-bottom: 110px;
@@ -102,7 +102,7 @@
     text-align: left;
   }
 
-  .about-project_list {
+  .about-project__list {
     margin-bottom: 93px;
   }
 }
@@ -131,7 +131,7 @@
     text-align: left;
   }
 
-  .about-project_list {
+  .about-project__list {
     margin-bottom: 59px;
     flex-direction: column;
     gap: 57px;

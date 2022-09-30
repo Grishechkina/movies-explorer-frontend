@@ -6,14 +6,14 @@ import AboutMe from './AboutMe/AboutMe'
 import Portfolio from './Portfolio/Portfolio'
 function Main() {
   return (
-    <>
+    <section>
       <Promo />
       <NavTab />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-    </>
+    </section>
   )
 }
 

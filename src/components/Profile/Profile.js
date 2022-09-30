@@ -60,7 +60,7 @@ function Profile() {
   }
 
   return (
-    <div className="profile">
+    <section className="profile">
       <form className="profile__form">
         <div className="profile__form-top">
           <p className="profile__title">Привет, Человек!</p>
@@ -112,7 +112,7 @@ function Profile() {
           >Сохранить</button>
         </div>
       </form>
-    </div>
+    </section>
   );
 }
 
