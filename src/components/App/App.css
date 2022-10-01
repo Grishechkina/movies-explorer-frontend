@@ -1,0 +1,21 @@
+.page {
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* min-height: 100vh; */
+  box-sizing: border-box;
+}
+
+.link {
+  text-decoration: none;
+  color: black
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.btn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
