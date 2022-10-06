@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function FilterCheckbox({ onCheckBoxClick, initState }) {
 
-  const [isChecked, setIsChecked] = useState(initState);
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    setIsChecked(initState)
+  }, [initState])
 
   function toggleCheckbox() {
     setIsChecked(!isChecked);

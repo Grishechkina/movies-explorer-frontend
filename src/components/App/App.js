@@ -27,6 +27,14 @@ function App() {
 
   // }
 
+  function handleProfileSignOut(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('keywords');
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('shortMovie');
+    // history.push('/');
+  }
+
   return (
     <div className="page">
       {isLoggedIn && <Header />}

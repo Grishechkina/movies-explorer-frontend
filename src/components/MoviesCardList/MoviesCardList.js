@@ -15,6 +15,10 @@ function MoviesCardList({ movies, isShortFilm, isOpenSavedMovies }) {
   }, [])
 
   useEffect(() => {
+    return window.removeEventListener('resize', getMoviesListRenderConfig);
+  }, [])
+
+  useEffect(() => {
     setShownMovies([])
     movies.length < maxAmountOfCard + 1 ? setShownMovies(movies) : setShownMovies(movies.slice(0, maxAmountOfCard));
     // шаг: 3 фильма. 12/3 = 4

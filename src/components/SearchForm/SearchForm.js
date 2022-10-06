@@ -1,10 +1,21 @@
 import { useState, useEffect } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onClick, keywords = '', isShort }) {
-  const [searchStr, setSearchStr] = useState(keywords);
+function SearchForm({ onClick, initialSearchStr = '', isShort }) {
+  const [searchStr, setSearchStr] = useState('');
   const [filmError, setFilmError] = useState('');
-  const [needShortFilmFilter, setNeedShortFilmFilter] = useState(isShort);
+  const [needShortFilmFilter, setNeedShortFilmFilter] = useState(false);
+
+  useEffect(() => {
+    setSearchStr(initialSearchStr)
+    setNeedShortFilmFilter(isShort)
+  }, [initialSearchStr, isShort])
+
+  useEffect(() => {
+    if (searchStr.length) {
+    onClick(searchStr, needShortFilmFilter);
+    }
+  }, [needShortFilmFilter])
 
   function onChange(e) {
     setSearchStr(e.target.value);
@@ -17,7 +28,7 @@ function SearchForm({ onClick, keywords = '', isShort }) {
 
   function handleButtonClick(e) {
     e.preventDefault();
-    onClick(searchStr, needShortFilmFilter);
+    onClick(searchStr, needShortFilmFilter, true);
   }
 
   return (
@@ -38,7 +49,7 @@ function SearchForm({ onClick, keywords = '', isShort }) {
         className="btn search-form__button"
         type="submit"
       ></button>
-      <FilterCheckbox className="search-form__checkbox" onCheckBoxClick={setNeedShortFilmFilter} initState={isShort} />
+      <FilterCheckbox className="search-form__checkbox" onCheckBoxClick={setNeedShortFilmFilter} initState={needShortFilmFilter} />
       <h1>{!!searchStr}</h1>
     </form>
   );
