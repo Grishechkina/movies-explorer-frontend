@@ -1,76 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg'
+import { useFormWithValidation } from '../../customHooks/validation';
 
-function Register() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [nameTouched, setNameTouched] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
-  const [passTouched, setPassTouched] = useState(false);
-  const [formValid, setFormValid] = useState(false);
-  const [error, setError] = useState('');
-  const [nameError, setNameError] = useState('Поле обязательно для заполнения');
-  const [emailError, setEmailError] = useState('Поле обязательно для заполнения');
-  const [passError, setPassError] = useState('Поле обязательно для заполнения');
+function Register({ onSubmit, error, clearErors }) {
 
-  const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
+  useEffect(() =>{ return clearErors()}, [])
 
   useEffect(() => {
-    if (nameError || emailError || passError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
-    }
-  }, [nameError, emailError, passError]);
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-    if ((e.target.value.length < 2) || (e.target.value.length > 30)) {
-      setNameError('Обязательная длина поля от 2 до 30 символов.');
-    } else {
-      setNameError('');
-    }
-  }
-
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-    if (!String(e.target.value).toLowerCase().match(EMAIL_REGEX)) {
-      setEmailError('Некорректный email');
-    } else {
-      setEmailError('');
-    }
-  }
-
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-    if (e.target.value.length < 2) {
-      setPassError('Обязательная длина поля от 2 символов.');
-    } else {
-      setPassError('');
-    }
-  }
+    resetForm();
+  }, [resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
-  }
-
-  function blurHandler(e) {
-    switch (e.target.name) {
-      case 'name':
-        setNameTouched(true);
-        break;
-      case 'email':
-        setEmailTouched(true);
-        break;
-      case 'pass':
-        setPassTouched(true);
-        break;
-      default:
-        break;
-    }
+    onSubmit({ email: values.email, password: values.password, name: values.name })
   }
 
   return (
@@ -89,46 +34,46 @@ function Register() {
               placeholder="Имя"
               minLength="2"
               maxLength="30"
-              value={name}
-              onChange={handleNameChange}
-              onBlur={blurHandler}
+              value={values.name || ''}
+              onChange={handleChange}
             />
-            <span className={`register__error-validation ${(nameTouched && nameError) && 'register__error-validation_show'}`}>{nameError}</span>
+            <span className='register__error-validation register__error-validation_show'>{errors.name || ''}</span>
           </label>
           <label className="register__form-field">Email
             <input
               id="register-email-input"
-              type="text"
+              type="email"
               className="register__input"
               name="email"
               required
               placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-              onBlur={blurHandler}
+              value={values.email || ''}
+              onChange={handleChange}
             />
-            <span className={`register__error-validation ${(emailTouched && emailError) && 'register__error-validation_show'}`}>{emailError}</span>
+            <span className='register__error-validation register__error-validation_show'>
+              {errors.email}
+            </span>
           </label>
           <label className="register__form-field">Пароль
             <input
               id="register-password-input"
               type="password"
               className="register__input"
-              name="pass"
+              name="password"
               required
               placeholder="Пароль"
-              value={password}
-              onChange={handlePasswordChange}
-              onBlur={blurHandler}
+              value={values.password || ''}
+              onChange={handleChange}
             />
-            <span className={`register__error-validation ${(passTouched && passError) && 'register__error-validation_show'}`}>{passError}</span>
+            <span className='register__error-validation register__error-validation_show'>{errors.password || ''}</span>
           </label>
           <span className={`register__error ${error}`}>При регистрации пользователя произошла ошибка.</span>
+          <span className={`register__error register__error_show`}>{error}</span>
           <button
-            className={`btn register__button ${!formValid && 'register__button_disabled'}`}
+            className={`btn register__button ${!isValid && 'register__button_disabled'}`}
             onClick={handleSubmit}
             type="submit"
-            disabled={!formValid}
+            disabled={!isValid}
           >Зарегистрироваться</button>
           <div className="register__caption">
             <p className="register__caption-text">Уже зарегистрированы?</p>

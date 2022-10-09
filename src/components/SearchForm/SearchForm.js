@@ -11,12 +11,6 @@ function SearchForm({ onClick, initialSearchStr = '', isShort }) {
     setNeedShortFilmFilter(isShort)
   }, [initialSearchStr, isShort])
 
-  useEffect(() => {
-    if (searchStr.length) {
-    onClick(searchStr, needShortFilmFilter);
-    }
-  }, [needShortFilmFilter])
-
   function onChange(e) {
     setSearchStr(e.target.value);
     if (e.target.value.length === 0) {

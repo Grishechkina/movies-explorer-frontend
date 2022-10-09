@@ -1,6 +1,6 @@
 import { BASE_URL } from './constants.js';
 
-export function register(email, password) {
+export function register(email, password, name) {
   return fetch(BASE_URL + '/signup', {
     method: 'POST',
     credentials: 'include',
@@ -8,7 +8,7 @@ export function register(email, password) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password, name })
   })
     .then(_checkServerResp)
 }

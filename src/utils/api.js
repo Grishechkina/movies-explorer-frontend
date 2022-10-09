@@ -7,7 +7,10 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(this.baseUrl + '/users/me', this.options)
+    return fetch(this.baseUrl + '/users/me', {
+      baseUrl: BASE_URL,
+      credentials: 'include'
+    })
       .then(this._checkServerResp)
   }
 
