@@ -3,7 +3,7 @@ import { BASE_URL } from './constants.js';
 class Api {
   constructor(options) {
     this.baseUrl = options.baseUrl
-    this.options = {headers: options.headers, credentials: 'include'};
+    this.options = { headers: options.headers, credentials: 'include' };
   }
 
   getUserInfo() {
@@ -23,6 +23,10 @@ class Api {
   getSavedMovies() {
     return fetch(this.baseUrl + '/movies', this.options)
       .then(this._checkServerResp)
+  }
+
+  handleLike(id, isLiked, movie) {
+    return isLiked ? this.deleteSavedMovie(id) : this.addSavedMovie(movie)
   }
 
   deleteSavedMovie(id) {

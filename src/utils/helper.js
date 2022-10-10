@@ -4,7 +4,6 @@ import isURL from 'validator/lib/isURL';
 export function findMovies(movies, searchStr, isShortMovies) {
   searchStr = searchStr.toLowerCase();
   const data = movies.filter(movie => {
-    console.log(movie)
     const movieRU = movie.nameRU.toLowerCase();
     const movieEN = movie.nameEN.toLowerCase();
     if (isShortMovies) {
@@ -16,13 +15,19 @@ export function findMovies(movies, searchStr, isShortMovies) {
 }
 
 export function validateMovie(movie) {
-  movie.image = 'https://api.nomoreparties.co' + movie.image.url
+  movie.thumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url
+  const image = 'https://api.nomoreparties.co' + movie.image.url
   return {
-    ...movie,
-    nameRU: movie.nameRU || 'Название неизвестно',
-    nameEN: movie.nameEN || 'Name is undefined',
+    country: movie.country,
+    description: movie.description,
+    director: movie.director,
+    year: movie.year,
+    nameRU: movie.nameRU || 'Названия нет :(',
+    nameEN: movie.nameEN || 'Name is undefined :(',
     duration: movie.duration || 0,
-    image: isURL(movie.image) ? movie.image : 'https://gladston.ru/upload/iblock/b59/img_183363.jpg',
+    image: isURL(image) ? image : 'https://gladston.ru/upload/iblock/b59/img_183363.jpg',
     trailerLink: isURL(movie.trailerLink) ? movie.trailerLink : 'https://www.youtube.com',
+    thumbnail: isURL(movie.thumbnail) ? movie.thumbnail : 'https://gladston.ru/upload/iblock/b59/img_183363.jpg',
+    movieId: movie.id
   }
 }

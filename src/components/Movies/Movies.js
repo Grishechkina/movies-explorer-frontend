@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import moviesApi from '../../utils/moviesApi'
+import api from '../../utils/MainApi'
+import moviesApi from '../../utils/MoviesApi'
 import { findMovies, validateMovie } from '../../utils/helper'
 import SearchForm from '../SearchForm/SearchForm'
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import NotFound from '../NotFound/NotFound';
 
-function Movies() {
+function Movies({ savedMovies }) {
 
   const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
@@ -28,7 +29,7 @@ function Movies() {
       .then(movies => {
         const validatedMovies = movies.map(movie => validateMovie(movie))
         setAllMovies(validatedMovies)
-        if (!initialMovies || !initialMovies.length) {
+        if (!keywords && (!initialMovies || !initialMovies.length)) {
           setMovies(validatedMovies)
         }
         setIsLoading(false)
@@ -39,7 +40,13 @@ function Movies() {
       })
   }, [])
 
-  function getMovies(searchStr, isShortMovies, isSearchBtnClicked = false) {
+  useEffect(() => {
+    movies.forEach(el => {
+      el.isLiked = savedMovies.findIndex(i => i.movieId === el.movieId) > -1
+    });
+  }, [movies])
+
+  function getMovies(searchStr, isShortMovies) {
     localStorage.setItem('keywords', searchStr);
     localStorage.setItem('shortMovie', isShortMovies);
     if (allMovies.length) {
@@ -49,13 +56,35 @@ function Movies() {
     }
   }
 
+  function addCardToSaved(e, movie) {
+    const isLiked = movie.isLiked
+    if (isLiked) {
+      const idx = savedMovies.findIndex(i => i.movieId === movie.movieId) //._id
+      api.deleteSavedMovie(savedMovies[idx]._id)
+        .then(res => {
+          e.target.classList.remove('card__button_saved')
+          savedMovies.splice(idx, 1)
+        })
+        .catch(err => console.log(err))
+    } else {
+      delete movie.isLiked
+      api.addSavedMovie(movie)
+        .then((res) => {
+          e.target.classList.add('card__button_saved')
+          savedMovies.push(res)
+
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
   return (
     <section>
       <SearchForm onClick={getMovies} isShort={isShortFilm} initialSearchStr={keywords} />
       {isLoading && <Preloader />}
       {isGetMoviesError && <p className='movies__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
       {!movies.length && !isGetMoviesError && <NotFound />}
-      {!!movies.length && <MoviesCardList movies={movies} isShortFilm={isShortFilm} isOpenSavedMovies={false} />}
+      {!!movies.length && <MoviesCardList movies={movies} handleCardClick={addCardToSaved} />}
     </section>
   )
 }

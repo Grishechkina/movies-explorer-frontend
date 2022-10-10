@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import * as auth from '../../utils/auth'
-import api from '../../utils/api'
+import api from '../../utils/MainApi'
 import { authErrors, profileErrors } from '../../utils/constants';
 import Header from '../Header/Header'
 import Main from '../Main/Main'
@@ -23,6 +23,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [updateProfileStats, setUpdateProfileStats] = useState({})
+  const [savedMovies, setSavedMovies] = useState([])
 
   const navigation = useNavigate();
 
@@ -32,11 +33,13 @@ function App() {
     tokenCheck()
   }, [])
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigation('/movies')
-  //   }
-  // }, [isLoggedIn])
+  useEffect(() => {
+    if (isLoggedIn) {
+      api.getSavedMovies()
+        .then(res => setSavedMovies(res))
+        .catch(err => console.log(err))
+    }
+  }, [isLoggedIn])
 
   function tokenCheck() {
     api.getUserInfo()
@@ -46,16 +49,8 @@ function App() {
           setCurrentUser(res)
         }
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
-        // if (err.statusCode === 401) {
-        //   console.log('here')
-        //   setAuthError(authErrors.wrongData);
-        // } else if (err.statusCode === 409) {
-        //   setAuthError(authErrors.emailError);
-        // } else {
-        //   setAuthError(authErrors.generalError);
-        // }
       });
   }
 
@@ -70,7 +65,6 @@ function App() {
       })
       .catch(err => {
         if (err.statusCode === 401) {
-          console.log('here')
           setAuthError(authErrors.wrongData);
         } else {
           setAuthError(authErrors.generalError);
@@ -84,13 +78,13 @@ function App() {
     api.editUserInfo(user)
       .then(res => {
         setCurrentUser(res)
-        setUpdateProfileStats({type: 'success', text: 'Профиль успешно обновлен'});
+        setUpdateProfileStats({ type: 'success', text: 'Профиль успешно обновлен' });
       })
       .catch(err => {
-        if (err.statusCode === 409){
-          setUpdateProfileStats({type: 'error', text: profileErrors.emailError});
+        if (err.statusCode === 409) {
+          setUpdateProfileStats({ type: 'error', text: profileErrors.emailError });
         } else {
-          setUpdateProfileStats({type: 'error', text: profileErrors.generalError});
+          setUpdateProfileStats({ type: 'error', text: profileErrors.generalError });
         }
       })
       .finally(() => setIsLoading(false))
@@ -99,7 +93,7 @@ function App() {
   function handleRegistration({ email, password, name }) {
     setIsLoading(true)
     auth.register(email, password, name)
-      .then((res) => handleLogin({email, password}))
+      .then((res) => handleLogin({ email, password }))
       .catch((err) => {
         if (err.statusCode === 409) {
           setAuthError(authErrors.emailError);
@@ -118,8 +112,7 @@ function App() {
     localStorage.removeItem('shortMovie');
   }
 
-  function clearErrorMessages(){
-    console.log('here')
+  function clearErrorMessages() {
     !(Object.keys(updateProfileStats).length === 0) && setUpdateProfileStats({});
     authError && setAuthError('');
   };
@@ -127,16 +120,16 @@ function App() {
   return (
     <div className="page" >
       <CurrentUserContext.Provider value={currentUser}>
-        <Header isLoggedIn={isLoggedIn}/>
+        <Header isLoggedIn={isLoggedIn} />
         <main>
           <Routes>
             <Route
               path="/sign-up"
-              element={<Register onSubmit={handleRegistration} error={authError} clearErors={clearErrorMessages}/>}
+              element={<Register onSubmit={handleRegistration} error={authError} clearErors={clearErrorMessages} />}
             />
             <Route
               path="/sign-in"
-              element={<Login onSubmit={handleLogin} error={authError} clearErors={clearErrorMessages}/>}
+              element={<Login onSubmit={handleLogin} error={authError} clearErors={clearErrorMessages} />}
             />
             <Route
               path='/'
@@ -145,18 +138,18 @@ function App() {
               } />
             <Route
               path="/movies"
-              element={<ProtectedRoute isLoggedIn={isLoggedIn}><Movies /></ProtectedRoute>}
+              element={<ProtectedRoute isLoggedIn={isLoggedIn}><Movies savedMovies={savedMovies}/></ProtectedRoute>}
             />
             <Route
               path="/saved-movies"
-              element={<ProtectedRoute isLoggedIn={isLoggedIn}><SavedMovies /></ProtectedRoute>}
+              element={<ProtectedRoute isLoggedIn={isLoggedIn}><SavedMovies savedMovies={savedMovies}/></ProtectedRoute>}
             />
             <Route
               path="/profile"
               element={
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <Profile onSubmit={handleUpdateUser} onSignout={handleProfileSignOut}
-                  clearErors={clearErrorMessages} updateProfileStats={updateProfileStats}/>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile onSubmit={handleUpdateUser} onSignout={handleProfileSignOut}
+                    clearErors={clearErrorMessages} updateProfileStats={updateProfileStats} />
                 </ProtectedRoute>}
             />
             <Route

@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { MOVIES_LIST_RENDER_CONFIG } from '../../utils/constants';
 
-function MoviesCardList({ movies, isShortFilm, isOpenSavedMovies }) {
+function MoviesCardList({ movies, handleCardClick }) {
 
   const [counter, setCounter] = useState(0);
   const [maxAmountOfCard, setMaxAmountOfCard] = useState(0);
   const [amountToAdd, setAmountToAdd] = useState(0);
   const [shownMovies, setShownMovies] = useState([]);
+
+  const path = useLocation().pathname;
+  const isOpenSavedMovies = path === '/saved-movies'
 
   useEffect(() => {
     window.addEventListener('resize', getMoviesListRenderConfig);
@@ -51,7 +55,7 @@ function MoviesCardList({ movies, isShortFilm, isOpenSavedMovies }) {
         {shownMovies
           .map((item, idx) => (
             <li className="movies-card__item" key={idx}>
-              <MoviesCard movie={item} isOpenSavedMovies={isOpenSavedMovies} />
+              <MoviesCard movie={item} isOpenSavedMovies={isOpenSavedMovies} handleCardClick={handleCardClick}/>
             </li>
           ))
         }
