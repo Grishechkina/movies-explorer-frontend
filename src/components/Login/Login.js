@@ -60,10 +60,10 @@ function Login({ onSubmit, error, clearErors, disabledForm }) {
           </label>
           <span className='login__error login__error_show'>{error}</span>
           <button
-            className={`login__button ${!isValid && 'login__button_disabled'}`}
+            className='login__button'
             onClick={handleSubmit}
             type="submit"
-            disabled={!isValid || disabledForm}
+            disabled={!isValid || disabledForm || !validator.isEmail(values.email)}
           >Войти</button>
           <div className="login__caption">
             <p className="login__caption-text">Ещё не зарегистрированы?</p>

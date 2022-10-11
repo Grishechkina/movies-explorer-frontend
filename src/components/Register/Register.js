@@ -76,10 +76,10 @@ function Register({ onSubmit, error, clearErors, disabledForm }) {
           <span className={`register__error ${error}`}>При регистрации пользователя произошла ошибка.</span>
           <span className={`register__error register__error_show`}>{error}</span>
           <button
-            className={`btn register__button ${!isValid && 'register__button_disabled'}`}
+            className='btn register__button'
             onClick={handleSubmit}
             type="submit"
-            disabled={!isValid || disabledForm}
+            disabled={!isValid || disabledForm  || !validator.isEmail(values.email)}
           >Зарегистрироваться</button>
           <div className="register__caption">
             <p className="register__caption-text">Уже зарегистрированы?</p>

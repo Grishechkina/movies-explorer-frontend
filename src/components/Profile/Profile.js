@@ -95,7 +95,7 @@ function Profile({ onSubmit, onSignout, updateProfileStats, clearErors, disabled
           }
           {
             !inputIsReadOnly && <button className='btn profile__button-save' onClick={updateUser}
-              type="submit" disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email) || disabledForm}>Сохранить</button>
+              type="submit" disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email) || disabledForm  || !validator.isEmail(values.email)}>Сохранить</button>
           }
         </div>
       </form>
