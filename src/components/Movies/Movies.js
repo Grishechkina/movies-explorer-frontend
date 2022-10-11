@@ -7,35 +7,29 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import NotFound from '../NotFound/NotFound';
 
-function Movies({ savedMovies }) {
+function Movies({ savedMovies, allMoviesFromServer, isGetMoviesError, isLoading }) {
 
   const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isShortFilm, setIsShortFilm] = useState(false);
   const [keywords, setKeywords] = useState('');
-  const [isGetMoviesError, setIsGetMoviesError] = useState(false);
+
+  const initialMovies = JSON.parse(localStorage.getItem('initialMovies'));
 
   useEffect(() => {
     const keywords = localStorage.getItem('keywords');
     keywords && setKeywords(keywords);
-    const initialMovies = JSON.parse(localStorage.getItem('initialMovies'));
     initialMovies && setMovies(initialMovies);
     const shortMovie = localStorage.getItem('shortMovie');
     shortMovie && setIsShortFilm(JSON.parse(shortMovie));
-
-    setIsLoading(true)
-    moviesApi.getMovies()
-      .then(movies => {
-        const validatedMovies = movies.map(movie => validateMovie(movie))
-        setAllMovies(validatedMovies)
-        if (!keywords && (!initialMovies || !initialMovies.length)) {
-          setMovies(validatedMovies)
-        }
-      })
-      .catch((err) => setIsGetMoviesError(true))
-      .finally(() => setIsLoading(false))
   }, [])
+
+  useEffect(() => {
+    setAllMovies(allMoviesFromServer)
+    if (!keywords && (!initialMovies || !initialMovies.length)) {
+      setMovies(allMoviesFromServer)
+    }
+  }, [allMoviesFromServer])
 
   useEffect(() => {
     movies.forEach(el => {

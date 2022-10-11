@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom'
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { MOVIES_LIST_RENDER_CONFIG } from '../../utils/constants';
@@ -8,19 +8,23 @@ function MoviesCardList({ movies, handleCardClick }) {
   const [counter, setCounter] = useState(0);
   const [maxAmountOfCard, setMaxAmountOfCard] = useState(0);
   const [amountToAdd, setAmountToAdd] = useState(0);
+  const [width, setWidth] = useState(document.documentElement.clientWidth);
   const [shownMovies, setShownMovies] = useState([]);
 
   const path = useLocation().pathname;
   const isOpenSavedMovies = path === '/saved-movies'
 
   useEffect(() => {
-    window.addEventListener('resize', getMoviesListRenderConfig);
-    getMoviesListRenderConfig();
+    function handleResize() {
+      setWidth(document.documentElement.clientWidth);;
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', getMoviesListRenderConfig);
   }, [])
 
   useEffect(() => {
-    return window.removeEventListener('resize', getMoviesListRenderConfig);
-  }, [])
+    getMoviesListRenderConfig();
+  }, [width])
 
   useEffect(() => {
     setShownMovies([])
@@ -30,7 +34,6 @@ function MoviesCardList({ movies, handleCardClick }) {
   }, [movies, maxAmountOfCard])
 
   function getMoviesListRenderConfig() {
-    const width = document.documentElement.clientWidth;
     if (width >= 1280) {
       setMaxAmountOfCard(MOVIES_LIST_RENDER_CONFIG['1280px'].maxAmount);
       setAmountToAdd(MOVIES_LIST_RENDER_CONFIG['1280px'].amountToAdd);
@@ -53,8 +56,8 @@ function MoviesCardList({ movies, handleCardClick }) {
     <div className="movies-card">
       <ul className="movies-card__list">
         {shownMovies
-          .map((item, idx) => (
-            <li className="movies-card__item" key={idx}>
+          .map((item) => (
+            <li className="movies-card__item" key={item.movieId}>
               <MoviesCard movie={item} isOpenSavedMovies={isOpenSavedMovies} handleCardClick={handleCardClick}/>
             </li>
           ))

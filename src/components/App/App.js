@@ -3,6 +3,8 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import * as auth from '../../utils/auth'
 import api from '../../utils/MainApi'
+import moviesApi from '../../utils/MoviesApi'
+import { validateMovie } from '../../utils/helper'
 import { authErrors, profileErrors } from '../../utils/constants';
 import Header from '../Header/Header'
 import Main from '../Main/Main'
@@ -23,6 +25,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [updateProfileStats, setUpdateProfileStats] = useState({})
   const [savedMovies, setSavedMovies] = useState([])
+  const [allMovies, setAllMovies] = useState([]);
+  const [isGetMoviesError, setIsGetMoviesError] = useState(false);
+  const [disabledForm, setDisabledForm] = useState(false);
 
   const navigation = useNavigate();
 
@@ -30,6 +35,7 @@ function App() {
 
   useEffect(() => {
     tokenCheck()
+      .then(() => { })
   }, [])
 
   useEffect(() => {
@@ -37,19 +43,29 @@ function App() {
       api.getSavedMovies()
         .then(res => setSavedMovies(res))
         .catch(err => console.log(err))
+      setIsLoading(true)
+      moviesApi.getMovies()
+        .then(movies => {
+          const validatedMovies = movies.map(movie => validateMovie(movie))
+          setAllMovies(validatedMovies)
+        })
+        .catch((err) => setIsGetMoviesError(true))
+        .finally(() => setIsLoading(false))
     }
   }, [isLoggedIn])
 
   function tokenCheck() {
-    api.getUserInfo()
+    return api.getUserInfo()
       .then((res) => {
         if (res) {
-          navigation('/movies')
           setIsLoggedIn(true);
           setCurrentUser(res)
         }
       })
       .catch((err) => {
+        localStorage.removeItem('keywords');
+        localStorage.removeItem('initialMovies');
+        localStorage.removeItem('shortMovie');
         console.log(err)
       });
   }
@@ -60,6 +76,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           tokenCheck()
+            .then(() => navigation('/movies'))
         }
       })
       .catch(err => {
@@ -119,16 +136,16 @@ function App() {
   return (
     <div className="page" >
       <CurrentUserContext.Provider value={currentUser}>
-        <Header isLoggedIn={isLoggedIn} />
+        {path !== '/sign-up' && path !== '/sign-in' && <Header isLoggedIn={isLoggedIn} />}
         <main>
           <Routes>
             <Route
               path="/sign-up"
-              element={<Register onSubmit={handleRegistration} error={authError} clearErors={clearErrorMessages} />}
+              element={<Register onSubmit={handleRegistration} error={authError} clearErors={clearErrorMessages} disabledForm={isLoading}/>}
             />
             <Route
               path="/sign-in"
-              element={<Login onSubmit={handleLogin} error={authError} clearErors={clearErrorMessages} />}
+              element={<Login onSubmit={handleLogin} error={authError} clearErors={clearErrorMessages} disabledForm={isLoading}/>}
             />
             <Route
               path='/'
@@ -137,17 +154,22 @@ function App() {
               } />
             <Route
               path="/movies"
-              element={<ProtectedRoute isLoggedIn={isLoggedIn}><Movies savedMovies={savedMovies}/></ProtectedRoute>}
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Movies savedMovies={savedMovies} allMoviesFromServer={allMovies}
+                    isGetMoviesError={isGetMoviesError} isLoading={isLoading} />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/saved-movies"
-              element={<ProtectedRoute isLoggedIn={isLoggedIn}><SavedMovies savedMovies={savedMovies}/></ProtectedRoute>}
+              element={<ProtectedRoute isLoggedIn={isLoggedIn}><SavedMovies savedMovies={savedMovies} /></ProtectedRoute>}
             />
             <Route
               path="/profile"
               element={
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile onSubmit={handleUpdateUser} onSignout={handleProfileSignOut}
+                  <Profile onSubmit={handleUpdateUser} onSignout={handleProfileSignOut} disabledForm={isLoading}
                     clearErors={clearErrorMessages} updateProfileStats={updateProfileStats} />
                 </ProtectedRoute>}
             />

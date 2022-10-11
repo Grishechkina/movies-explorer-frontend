@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg'
 import { useFormWithValidation } from '../../customHooks/validation';
+import validator from 'validator';
 
-function Login({ onSubmit, error, clearErors}) {
+function Login({ onSubmit, error, clearErors, disabledForm }) {
 
   const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
-  useEffect(() =>{ return clearErors()}, [])
+  useEffect(() => { return clearErors() }, [])
 
   useEffect(() => {
     resetForm();
@@ -21,7 +22,9 @@ function Login({ onSubmit, error, clearErors}) {
   return (
     <section className="login">
       <div className="login__container">
-        <img src={logo} alt="Фильмосерч лого" className="login__logo" />
+        <Link to="/">
+          <img src={logo} alt="Фильмосерч лого" className="login__logo" />
+        </Link>
         <form className="login__form" name='login'>
           <h2 className="login__title">Рады видеть!</h2>
           <label className="login__form-field">Email
@@ -34,9 +37,10 @@ function Login({ onSubmit, error, clearErors}) {
               placeholder="Email"
               value={values.email || ''}
               onChange={handleChange}
+              readOnly={disabledForm}
             />
             <span className='login__error-validation login__error-validation_show'>
-              {errors.email}
+              {values.email ? (validator.isEmail(values.email) ? '' : 'Некорректный email') : '' || errors.email}
             </span>
           </label>
           <label className="login__form-field">Пароль
@@ -50,16 +54,17 @@ function Login({ onSubmit, error, clearErors}) {
               minLength="2"
               value={values.password || ''}
               onChange={handleChange}
+              readOnly={disabledForm}
             />
             <span className='login__error-validation login__error-validation_show'>{errors.password || ''}</span>
           </label>
-            <span className='login__error login__error_show'>{error}</span>
-            <button
-              className={`login__button ${!isValid && 'login__button_disabled'}`}
-              onClick={handleSubmit}
-              type="submit"
-              disabled={!isValid}
-            >Войти</button>
+          <span className='login__error login__error_show'>{error}</span>
+          <button
+            className={`login__button ${!isValid && 'login__button_disabled'}`}
+            onClick={handleSubmit}
+            type="submit"
+            disabled={!isValid || disabledForm}
+          >Войти</button>
           <div className="login__caption">
             <p className="login__caption-text">Ещё не зарегистрированы?</p>
             <Link to="/sign-up" className="login__caption-link link">Регистрация</Link>

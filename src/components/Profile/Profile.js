@@ -2,8 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import { useFormWithValidation } from '../../customHooks/validation';
+import validator from 'validator';
 
-function Profile({ onSubmit, onSignout, updateProfileStats, clearErors }) {
+function Profile({ onSubmit, onSignout, updateProfileStats, clearErors, disabledForm }) {
 
   const [inputIsReadOnly, setInputIsReadOnly] = useState(true);
   const { values, handleChange, resetForm, errors, isValid, setValues } = useFormWithValidation();
@@ -57,7 +58,7 @@ function Profile({ onSubmit, onSignout, updateProfileStats, clearErors }) {
                   maxLength="30"
                   value={values.name || ''}
                   onChange={handleChange}
-                  readOnly={inputIsReadOnly}
+                  readOnly={inputIsReadOnly || disabledForm}
                 ></input>
                 <span className='profile__error-validation profile__error-validation_show'>{errors.name || ''}</span>
               </label>
@@ -73,10 +74,10 @@ function Profile({ onSubmit, onSignout, updateProfileStats, clearErors }) {
                   required
                   placeholder="Email"
                   onChange={handleChange}
-                  readOnly={inputIsReadOnly}
+                  readOnly={inputIsReadOnly || disabledForm}
                 ></input>
                 <span className='profile__error-validation profile__error-validation_show'>
-                  {errors.email}
+                { values.email ? (validator.isEmail(values.email) ? '' : 'Некорректный email') : '' || errors.email}
                 </span>
               </label>
             </div>
@@ -94,7 +95,7 @@ function Profile({ onSubmit, onSignout, updateProfileStats, clearErors }) {
           }
           {
             !inputIsReadOnly && <button className='btn profile__button-save' onClick={updateUser}
-              type="submit" disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email)}>Сохранить</button>
+              type="submit" disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email) || disabledForm}>Сохранить</button>
           }
         </div>
       </form>

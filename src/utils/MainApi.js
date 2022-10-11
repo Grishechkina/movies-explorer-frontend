@@ -25,10 +25,6 @@ class Api {
       .then(this._checkServerResp)
   }
 
-  handleLike(id, isLiked, movie) {
-    return isLiked ? this.deleteSavedMovie(id) : this.addSavedMovie(movie)
-  }
-
   deleteSavedMovie(id) {
     this._createOptions('DELETE', {})
     return fetch(`${this.baseUrl}/movies/${id}`, this.options)

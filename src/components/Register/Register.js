@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg'
 import { useFormWithValidation } from '../../customHooks/validation';
+import validator from 'validator';
 
-function Register({ onSubmit, error, clearErors }) {
+function Register({ onSubmit, error, clearErors, disabledForm }) {
 
   const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
-  useEffect(() =>{ return clearErors()}, [])
+  useEffect(() => { return clearErors() }, [])
 
   useEffect(() => {
     resetForm();
@@ -21,7 +22,9 @@ function Register({ onSubmit, error, clearErors }) {
   return (
     <section className="register">
       <div className="register__container">
-        <img src={logo} alt="Фильмосерч лого" className="register__logo" />
+        <Link to="/">
+          <img src={logo} alt="Фильмосерч лого" className="register__logo" />
+        </Link>
         <form className="register__form" name='register'>
           <h2 className="register__header">Добро пожаловать!</h2>
           <label className="register__form-field">Имя
@@ -36,6 +39,7 @@ function Register({ onSubmit, error, clearErors }) {
               maxLength="30"
               value={values.name || ''}
               onChange={handleChange}
+              readOnly={disabledForm}
             />
             <span className='register__error-validation register__error-validation_show'>{errors.name || ''}</span>
           </label>
@@ -49,9 +53,10 @@ function Register({ onSubmit, error, clearErors }) {
               placeholder="Email"
               value={values.email || ''}
               onChange={handleChange}
+              readOnly={disabledForm}
             />
             <span className='register__error-validation register__error-validation_show'>
-              {errors.email}
+              {values.email ? (validator.isEmail(values.email) ? '' : 'Некорректный email') : '' || errors.email}
             </span>
           </label>
           <label className="register__form-field">Пароль
@@ -64,6 +69,7 @@ function Register({ onSubmit, error, clearErors }) {
               placeholder="Пароль"
               value={values.password || ''}
               onChange={handleChange}
+              readOnly={disabledForm}
             />
             <span className='register__error-validation register__error-validation_show'>{errors.password || ''}</span>
           </label>
@@ -73,7 +79,7 @@ function Register({ onSubmit, error, clearErors }) {
             className={`btn register__button ${!isValid && 'register__button_disabled'}`}
             onClick={handleSubmit}
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || disabledForm}
           >Зарегистрироваться</button>
           <div className="register__caption">
             <p className="register__caption-text">Уже зарегистрированы?</p>
