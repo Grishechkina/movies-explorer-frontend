@@ -1,69 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { useFormWithValidation } from '../../customHooks/validation';
+import validator from 'validator';
 
-function Profile() {
+function Profile({ onSubmit, onSignout, updateProfileStats, clearErors, disabledForm }) {
 
-  const [valueName, setValueName] = useState("Челик");
-  const [valueEmail, setValueEmail] = useState("mikrochelik@yandex.ru");
-  const [formValid, setFormValid] = useState(false);
-  const [valueNameError, setValueNameError] = useState('');
-  const [valueEmailError, setValueEmailError] = useState('');
-  const [visibleButton, setVisibleButton] = useState(false);
-  const [hideEdit, setHideEdit] = useState(false);
-  const [hideSignOut, setHideSignOut] = useState(false);
   const [inputIsReadOnly, setInputIsReadOnly] = useState(true);
-  const [errorGeneralEdit, setGeneralErrorEdit] = useState('');
-  const [errorButtonSave, setErrorButtonSave] = useState(false);
+  const { values, handleChange, resetForm, errors, isValid, setValues } = useFormWithValidation();
+  const currentUser = useContext(CurrentUserContext);
 
-  const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  useEffect(() =>{ return clearErors()}, [])
 
   useEffect(() => {
-    if (valueNameError || valueEmailError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
+    resetForm();
+  }, [resetForm]);
+
+  useEffect(() => {
+    if (currentUser.name && currentUser.email) {
+      setValues({ name: currentUser.name, email: currentUser.email })
     }
-  }, [valueNameError, valueEmailError]);
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (updateProfileStats.type === 'error') {
+      setInputIsReadOnly(false)
+    } else {
+      setInputIsReadOnly(true)
+    }
+  }, [updateProfileStats]);
 
   function onEdit(e) {
-    setVisibleButton(true);
-    setHideEdit(true);
-    setHideSignOut(true);
     setInputIsReadOnly(false);
   }
 
-  function onSignOut() { }
-
-  function onButtonSaveClick(e) {
+  function updateUser(e) {
     e.preventDefault();
-    setGeneralErrorEdit('profile__error_show');
-    setErrorButtonSave(true);
-    setInputIsReadOnly(true);
-  }
-
-  function handleChangeName(event) {
-    setValueName(event.target.value)
-    if ((event.target.value.length < 2) || (event.target.value.length > 30)) {
-      setValueNameError('Обязательная длина поля от 2 до 30 сим.');
-    } else {
-      setValueNameError('');
-    }
-  }
-
-  function handleChangeEmail(event) {
-    setValueEmail(event.target.value);
-    if (!String(event.target.value).toLowerCase().match(EMAIL_REGEX)) {
-      setValueEmailError('Некорректный email');
-    } else {
-      setValueEmailError('');
-    }
+    onSubmit({ email: values.email, name: values.name })
   }
 
   return (
-    <section className="profile">
+    <section className="profile" >
       <form className="profile__form">
         <div className="profile__form-top">
-          <p className="profile__title">Привет, Человек!</p>
+          <p className="profile__title">Привет, {currentUser.name}!</p>
           <div className="profile__data">
             <div className="profile__data-line">
               <p className="profile__data-text">Имя</p>
@@ -72,44 +52,51 @@ function Profile() {
                   className="profile__data-input"
                   name='name'
                   type="text"
-                  value={valueName}
-                  onChange={handleChangeName}
-                  readOnly={inputIsReadOnly}
+                  required
+                  placeholder="Имя"
+                  minLength="2"
+                  maxLength="30"
+                  value={values.name || ''}
+                  onChange={handleChange}
+                  readOnly={inputIsReadOnly || disabledForm}
                 ></input>
-                <span className={`profile__error-validation ${(valueNameError && !inputIsReadOnly) && "profile__error-validation_show"}`}>{valueNameError}</span>
+                <span className='profile__error-validation profile__error-validation_show'>{errors.name || ''}</span>
               </label>
             </div>
             <div className="profile__data-line">
-              <p className="profile__data-text">E-mail</p>
+              <p className="profile__data-text">Email</p>
               <label className="profile__data-label" >
                 <input
                   className="profile__data-input"
                   type="email"
                   name='email'
-                  value={valueEmail}
-                  onChange={handleChangeEmail}
-                  readOnly={inputIsReadOnly}
+                  value={values.email || ''}
+                  required
+                  placeholder="Email"
+                  onChange={handleChange}
+                  readOnly={inputIsReadOnly || disabledForm}
                 ></input>
-                <span className={`profile__error-validation ${(valueEmailError && !inputIsReadOnly) && "profile__error-validation_show"}`}>{valueEmailError}</span>
+                <span className='profile__error-validation profile__error-validation_show'>
+                { values.email ? (validator.isEmail(values.email) ? '' : 'Некорректный email') : '' || errors.email}
+                </span>
               </label>
             </div>
             <div className="profile__data-line"></div>
           </div>
         </div>
         <div className="profile__form-bottom">
-          <span className={`profile__error ${errorGeneralEdit}`}>При обновлении профиля произошла ошибка.</span>
-          <p className={`profile__edit ${hideEdit && 'profile__edit_hide'}`} onClick={onEdit}>Редактировать</p>
-          <Link to='/' onClick={onSignOut} className={`link profile__sign-out ${hideSignOut && 'profile__sign-out_hide'}`}>Выйти из аккаунта</Link>
-          <button
-            className={`btn profile__button-save 
-              ${visibleButton && 'profile__button-save_active'} 
-              ${errorButtonSave && 'profile__button-save_error'}
-              ${!formValid && 'profile__button-save_error'}`
-            }
-            onClick={onButtonSaveClick}
-            type="submit"
-            disabled={!formValid}
-          >Сохранить</button>
+
+          <span className={updateProfileStats.type === 'error' ? 'profile__error' : 'profile__success'}>{updateProfileStats.text || ''}</span>
+          {
+            inputIsReadOnly && <>
+              <p className='profile__edit' onClick={onEdit}>Редактировать</p>
+              <Link to='/' onClick={onSignout} className='link profile__sign-out'>Выйти из аккаунта</Link>
+            </>
+          }
+          {
+            !inputIsReadOnly && <button className='btn profile__button-save' onClick={updateUser}
+              type="submit" disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email) || disabledForm  || !validator.isEmail(values.email)}>Сохранить</button>
+          }
         </div>
       </form>
     </section>

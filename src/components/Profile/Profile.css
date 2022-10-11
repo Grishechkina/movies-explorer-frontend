@@ -105,10 +105,7 @@
   color: #000000;
   margin: 0;
   padding: 0;
-}
-
-.profile__edit_hide {
-  display: none;
+  cursor: pointer;
 }
 
 .profile__sign-out {
@@ -122,12 +119,7 @@
   text-decoration: none;
 }
 
-.profile__sign-out_hide {
-  display: none;
-}
-
 .profile__button-save {
-  display: none;
   background: #000;
   border-radius: 3px;
   width: 100%;
@@ -141,24 +133,28 @@
   border: none;
 }
 
-.profile__button-save_active {
-  display: block;
-}
 
-.profile__button-save_error {
+.profile__button-save:disabled {
   background: #F8F8F8;
   color: #C2C2C2;
   pointer-events: none;
-  user-select: none;
 }
 
 .profile__error {
-  visibility: hidden;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   color: #FF004C;
+  margin-bottom: 20px;
+}
+
+.profile__success {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: green;
   margin-bottom: 20px;
 }
 

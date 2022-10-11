@@ -77,7 +77,7 @@
   border: none;
 }
 
-.login__button_disabled {
+.login__button:disabled {
   background: #F8F8F8;
   color: #C2C2C2;
   pointer-events: none;
@@ -144,6 +144,7 @@
     font-size: 12px;
     line-height: 15px;
   }
+
   .login__caption-link,
   .login__caption-text {
     font-size: 12px;

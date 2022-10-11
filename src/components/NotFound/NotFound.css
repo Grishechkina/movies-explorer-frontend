@@ -1,0 +1,32 @@
+.not-found {
+  margin: 50px;
+  height: 28vh;
+}
+
+.not-found__text {
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #000;
+  text-align: center;
+}
+
+@media (min-width: 781px) and (max-width: 1279px) {
+  .not-found {
+    height: 26vh;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 780px) {
+  .not-found {
+    height: 24vh;
+  }
+}
+
+@media (max-width: 499px) {
+  .not-found {
+    height: 20vh;
+  }
+}

@@ -37,6 +37,12 @@
   background-color: transparent;
 }
 
+.search-form__error {
+  margin-top: 20px;
+  align-self: start;
+  color: red;
+}
+
 @media (min-width: 500px) and (max-width: 850px) {
   .search-form {
     margin: 97px 30px 0 30px;
@@ -50,6 +56,11 @@
 
   .search-form__input {
     width: 96%;
+    font-size: 11px;
+    line-height: 17px;
+  }
+
+  .search-form__error {
     font-size: 11px;
     line-height: 17px;
   }
