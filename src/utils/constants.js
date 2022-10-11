@@ -1,5 +1,4 @@
-// export const BASE_URL = 'https://film.o.search.nomoredomains.sbs/api';
-export const BASE_URL = 'http://localhost:3001/api';
+export const BASE_URL = 'https://film.o.search.nomoredomains.sbs/api';
 export const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 export const MOVIES_LIST_RENDER_CONFIG = {
   '1280px': { maxAmount: 12, amountToAdd: 3 },

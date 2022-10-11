@@ -37,7 +37,7 @@ function Profile({ onSubmit, onSignout, updateProfileStats, clearErors }) {
     e.preventDefault();
     onSubmit({ email: values.email, name: values.name })
   }
-// onClick={clearErors}
+
   return (
     <section className="profile" >
       <form className="profile__form">

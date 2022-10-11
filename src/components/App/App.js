@@ -19,7 +19,6 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [authError, setAuthError] = useState('')
-  const [loginError, setLoginError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [updateProfileStats, setUpdateProfileStats] = useState({})
@@ -45,6 +44,7 @@ function App() {
     api.getUserInfo()
       .then((res) => {
         if (res) {
+          navigation('/movies')
           setIsLoggedIn(true);
           setCurrentUser(res)
         }
@@ -60,7 +60,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           tokenCheck()
-          navigation('/movies')
         }
       })
       .catch(err => {

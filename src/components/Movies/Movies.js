@@ -32,19 +32,16 @@ function Movies({ savedMovies }) {
         if (!keywords && (!initialMovies || !initialMovies.length)) {
           setMovies(validatedMovies)
         }
-        setIsLoading(false)
       })
-      .catch((err) => {
-        setIsGetMoviesError(true)
-        setIsLoading(false)
-      })
+      .catch((err) => setIsGetMoviesError(true))
+      .finally(() => setIsLoading(false))
   }, [])
 
   useEffect(() => {
     movies.forEach(el => {
       el.isLiked = savedMovies.findIndex(i => i.movieId === el.movieId) > -1
     });
-  }, [movies])
+  }, [movies, savedMovies])
 
   function getMovies(searchStr, isShortMovies) {
     localStorage.setItem('keywords', searchStr);
@@ -59,7 +56,7 @@ function Movies({ savedMovies }) {
   function addCardToSaved(e, movie) {
     const isLiked = movie.isLiked
     if (isLiked) {
-      const idx = savedMovies.findIndex(i => i.movieId === movie.movieId) //._id
+      const idx = savedMovies.findIndex(i => i.movieId === movie.movieId)
       api.deleteSavedMovie(savedMovies[idx]._id)
         .then(res => {
           e.target.classList.remove('card__button_saved')
@@ -84,7 +81,7 @@ function Movies({ savedMovies }) {
       {isLoading && <Preloader />}
       {isGetMoviesError && <p className='movies__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
       {!movies.length && !isGetMoviesError && <NotFound />}
-      {!!movies.length && <MoviesCardList movies={movies} handleCardClick={addCardToSaved} />}
+      {!isLoading && !!movies.length && <MoviesCardList movies={movies} handleCardClick={addCardToSaved} />}
     </section>
   )
 }
